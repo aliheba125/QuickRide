@@ -5,6 +5,25 @@ import { useCaptain } from "../contexts/CaptainContext";
 import VerifyEmail from "../components/VerifyEmail";
 import Loading from "./Loading";
 
+// Demo mode: skip login/backend and preview the captain dashboard with mock data.
+const DEMO_MODE = import.meta.env.VITE_DEMO_MODE === "true";
+
+const DEMO_CAPTAIN = {
+  _id: "demo-captain-001",
+  email: "demo.captain@quickride.app",
+  phone: "+92 300 1234567",
+  fullname: { firstname: "Ali", lastname: "Khan" },
+  vehicle: { color: "White", number: "ABC-123", capacity: 4, type: "car" },
+  status: "active",
+  emailVerified: true,
+  rides: [
+    { status: "completed", fare: 350, distance: 8200, updatedAt: new Date().toISOString() },
+    { status: "completed", fare: 220, distance: 5400, updatedAt: new Date().toISOString() },
+    { status: "completed", fare: 480, distance: 12300, updatedAt: "2024-01-10T10:00:00Z" },
+    { status: "cancelled", fare: 0, distance: 0, updatedAt: "2024-01-09T10:00:00Z" },
+  ],
+};
+
 function CaptainProtectedWrapper({ children }) {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -14,6 +33,14 @@ function CaptainProtectedWrapper({ children }) {
   const [isVerified, setIsVerified] = useState(null);
 
   useEffect(() => {
+    // --- Demo bypass: no backend required ---
+    if (DEMO_MODE) {
+      setCaptain(DEMO_CAPTAIN);
+      setIsVerified(true);
+      setLoading(false);
+      return;
+    }
+
     if (!token) {
       navigate("/captain/login");
       return;

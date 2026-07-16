@@ -37,6 +37,7 @@ jobs:
           VITE_SERVER_URL: ${{ vars.VITE_SERVER_URL }}
           VITE_ENVIRONMENT: production
           VITE_RIDE_TIMEOUT: '90000'
+          VITE_DEMO_MODE: 'true'
         run: npm run build
 
       - name: SPA fallback (404 -> index.html)

@@ -39,6 +39,15 @@ function GetStarted() {
           type={"link"}
           icon={<ArrowRight />}
         />
+        {import.meta.env.VITE_DEMO_MODE === "true" && (
+          <button
+            onClick={() => navigate("/captain/home")}
+            className="flex items-center justify-center gap-2 w-full py-3 rounded-lg border-2 border-black bg-black text-white font-semibold"
+          >
+            Preview Captain Dashboard (Demo)
+            <ArrowRight />
+          </button>
+        )}
       </div>
     </div>
   );
