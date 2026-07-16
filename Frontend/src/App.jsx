@@ -43,7 +43,7 @@ function App() {
           </button>
         </div>
 
-        <BrowserRouter>
+        <BrowserRouter basename="/QuickRide">
           <LoggingWrapper />
           <Routes>
             <Route path="/" element={<GetStarted />} />
